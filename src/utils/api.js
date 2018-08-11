@@ -27,15 +27,23 @@ export const getAllPostsForCategory = (category) =>
       return data;
     })
 
+export const getPost = (id) =>
+  fetch(`${api}/posts/${id}`, { headers })
+    .then(res => res.json())
+    .then((data) => {
+      return data;
+    })
+
+
 export const addNewPost = (data) =>
   fetch(`${api}/posts`, {
     method: 'POST',
-    headers,    
+    headers,
     body: JSON.stringify(data)
   }).then(res => res.json())
-  .then((data) => {
-    return data;
-  })
+    .then((data) => {
+      return data;
+    })
 
 export const getDeletePost = (id) =>
   fetch(`${api}/posts/${id}`, {

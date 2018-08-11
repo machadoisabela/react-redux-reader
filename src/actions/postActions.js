@@ -3,6 +3,7 @@ export const LIST_POSTS_FOR_CATEGORY = "LIST_POSTS_FOR_CATEGORY"
 export const ADD_POST = "ADD_POST"
 export const DELETE_POST = "DELETE_POST"
 export const ADD_VOTE = "ADD_VOTE"
+export const SHOW_POST = "SHOW_POST"
 
 
 export function listPosts(posts){
@@ -33,6 +34,13 @@ export function deletePost(id){
     return{
         type: DELETE_POST,
         id
+    }
+}
+
+export function showPost(post){
+    return{
+        type: SHOW_POST,
+        post
     }
 }
 

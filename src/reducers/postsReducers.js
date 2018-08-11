@@ -1,7 +1,8 @@
-import { LIST_POSTS, LIST_POSTS_FOR_CATEGORY, DELETE_POST, ADD_VOTE, ADD_POST } from '../actions/postActions';
+import { LIST_POSTS, LIST_POSTS_FOR_CATEGORY, DELETE_POST, ADD_VOTE, ADD_POST, SHOW_POST } from '../actions/postActions';
 
 const postsInitialState = {
-    posts: []
+    posts: [],
+    post: null
 }
 
 function posts(state = postsInitialState, action){
@@ -26,6 +27,11 @@ function posts(state = postsInitialState, action){
             return{
                 ...state,
                 posts: state.posts.filter(post => post.id !== action.id)
+            }
+        case SHOW_POST: 
+            return{
+                ...state,
+                post: action.post
             }
         case ADD_VOTE: 
             return{

@@ -12,6 +12,7 @@ import Chip from '@material-ui/core/Chip';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
 import { MenuItem } from "@material-ui/core";
+import { withRouter } from 'react-router-dom';
 
 class PostList extends Component {
 
@@ -37,10 +38,10 @@ class PostList extends Component {
     }
 
     componentDidMount() {
-        let category = this.props.match ? this.props.match.params : undefined;
-        if(category !== undefined){
+        let category = this.props.match ? this.props.match.params.category : undefined;
+        if (category !== undefined) {
             API.getAllPostsForCategory(category).then(posts => this.props.dispatch(listPosts(posts)));
-        }else{
+        } else {
             API.getAllPosts().then(posts => this.props.dispatch(listPosts(posts)));
         }
     }
@@ -54,21 +55,28 @@ class PostList extends Component {
 
         return (
             <div>
-                <h1 className="post-title">POSTS</h1>
-                <div className="order-select">
-                    <InputLabel htmlFor="order">Order by: </InputLabel>
-                    <Select
-                        value={this.state.orderBy}
-                        onChange={this.handleChange}
-                        inputProps={{
-                            name: 'orderby',
-                            id: 'order',
-                        }}>
-                        <MenuItem value={'timestamp'}>Date</MenuItem>
-                        <MenuItem value={'voteScore'}>Votes</MenuItem>
-                    </Select>
-                </div>
-                {orderedItens.length && orderedItens.map((post) => (
+                {orderedItens.length === 0 &&
+                    <h2 className="post-title">NO POSTS FOUND</h2>
+                }
+                {orderedItens.length !== 0 &&
+                    <h2 className="post-title">POSTS</h2>
+                }
+                {orderedItens.length !== 0 &&
+                    <div className="order-select">
+                        <InputLabel htmlFor="order">Order by: </InputLabel>
+                        <Select
+                            value={this.state.orderBy}
+                            onChange={this.handleChange}
+                            inputProps={{
+                                name: 'orderby',
+                                id: 'order',
+                            }}>
+                            <MenuItem value={'timestamp'}>Date</MenuItem>
+                            <MenuItem value={'voteScore'}>Votes</MenuItem>
+                        </Select>
+                    </div>
+                }
+                {orderedItens.length !== 0 && orderedItens.map((post) => (
                     <Card className="post-card" key={post.id}>
                         <CardContent>
                             <Typography variant="headline" component="h2">
@@ -91,9 +99,9 @@ class PostList extends Component {
                                     {post.voteScore} Vote(s)
                                 </Typography>
                             </div>
-                        </CardContent>                        
+                        </CardContent>
                         <CardActions className="pull-right">
-                            <Button size="small" component={Link} to={`/post/${post.id}`}>See More</Button>
+                            <Button size="small" component={Link} to={`/${post.category}/${post.id}`}>See More</Button>
                             <Button size="small" variant="contained" color="primary" onClick={() => this.handleVote(post.id, 'upVote')}>Like</Button>
                             <Button size="small" variant="contained" color="secondary" onClick={() => this.handleVote(post.id, 'downVote')}>Dislike</Button>
                         </CardActions>
@@ -113,4 +121,4 @@ function mapStateToProps({ posts }) {
     return { posts }
 }
 
-export default connect(mapStateToProps, null)(PostList)
+export default withRouter(connect(mapStateToProps, null)(PostList))
