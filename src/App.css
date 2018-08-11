@@ -1,0 +1,84 @@
+.App {
+  text-align: center;
+}
+
+.App-logo {
+  animation: App-logo-spin infinite 20s linear;
+  height: 80px;
+}
+
+.App-header {
+  background-color: #222;
+  height: 150px;
+  padding: 20px;
+  color: white;
+}
+
+.App-title {
+  font-size: 1.5em;
+}
+
+.App-intro {
+  font-size: large;
+}
+
+.add-post{  
+  padding: 20px;
+}
+
+.post-title{
+  margin-left: 20px;
+}
+
+.post-card{
+  margin: 20px;
+}
+
+.post-card .author{
+  margin-bottom: 20px
+}
+
+.post-card .category{
+  font-size: 15px;
+  font-weight: 500;
+  margin-bottom: 20px;
+}
+
+.post-card .comments{
+  display: inline-flex;
+}
+.pull-right{
+  float: right;
+}
+
+.order-select{
+  text-align: right;
+  margin-right: 23px;
+}
+
+.categories-list{
+  display: inline-flex;
+  width: 100%;
+  background-color: #e0e0e0;
+  box-shadow: 1px 2px 8px rgb(160, 159, 159);
+}
+
+.categories-card{
+  max-height: 50px;
+  margin: 20px;
+  cursor: pointer;
+}
+
+.categories-card .categories-name{
+  font-size: 16px;
+  font-weight: 500;
+}
+
+.mr-5{
+  margin-right: 5px;
+}
+
+@keyframes App-logo-spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
