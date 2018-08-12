@@ -36,11 +36,15 @@ function posts(state = postsInitialState, action){
         case ADD_VOTE: 
             return{
                 ...state,
+                post: state.post ? {
+                    ...state.post,
+                    voteScore: state.post.voteScore + action.vote
+                } : null,
                 posts: state.posts.map(post => {
                     if(post.id === action.id)
                         post.voteScore = post.voteScore + action.vote
                     return post;
-                })
+                }),
             }
         default:
             return state

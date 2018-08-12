@@ -48,6 +48,52 @@
 .post-card .comments{
   display: inline-flex;
 }
+
+.post-detail{  
+  padding: 20px;
+  width: 90%;
+  margin: auto;
+}
+
+.post-detail .author{
+  color: rgb(160, 159, 159);
+  margin-bottom: 20px;
+}
+.post-detail .body{
+  font-size: 18px;
+}
+
+.post-detail .actions{
+  border-top: 5px solid #ccc;
+  margin-top: 20px;
+  margin-bottom: 20px;
+  padding: 7px 0;
+  border-bottom: 5px solid #ccc;
+}
+
+.post-detail .comment{
+  padding: 10px 10px 10px 0;
+  font-weight: bold;
+}
+
+.post-detail .vote{
+  padding: 10px 10px 10px 10px;
+  display: inline;
+  font-weight: bold;
+}
+
+.details-comments{
+  border-bottom: 1px solid #ccc;
+}
+
+.post-detail h1{  
+  margin-bottom: 5px;
+}
+
+.mg-5{
+  margin: 5px !important;
+}
+
 .pull-right{
   float: right;
 }

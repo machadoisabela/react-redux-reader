@@ -11,6 +11,9 @@ import Button from '@material-ui/core/Button';
 import Chip from '@material-ui/core/Chip';
 import InputLabel from '@material-ui/core/InputLabel';
 import Select from '@material-ui/core/Select';
+import IconButton from '@material-ui/core/IconButton';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import { MenuItem } from "@material-ui/core";
 import { withRouter } from 'react-router-dom';
 
@@ -37,13 +40,21 @@ class PostList extends Component {
         API.getDeletePost(id).then(() => this.props.dispatch(deletePost(id)));
     }
 
-    componentDidMount() {
+    loadPosts = () => {
         let category = this.props.match ? this.props.match.params.category : undefined;
         if (category !== undefined) {
             API.getAllPostsForCategory(category).then(posts => this.props.dispatch(listPosts(posts)));
         } else {
             API.getAllPosts().then(posts => this.props.dispatch(listPosts(posts)));
         }
+    }
+
+    componentDidMount() {
+        this.loadPosts()
+    }
+
+    componentWillReceiveProps() {
+        this.loadPosts()
     }
 
     render() {
@@ -102,12 +113,16 @@ class PostList extends Component {
                         </CardContent>
                         <CardActions className="pull-right">
                             <Button size="small" component={Link} to={`/${post.category}/${post.id}`}>See More</Button>
-                            <Button size="small" variant="contained" color="primary" onClick={() => this.handleVote(post.id, 'upVote')}>Like</Button>
-                            <Button size="small" variant="contained" color="secondary" onClick={() => this.handleVote(post.id, 'downVote')}>Dislike</Button>
-                        </CardActions>
-                        <CardActions>
                             <Button size="small" onClick={() => this.handleDeletePost(post.id)}>Delete</Button>
                             <Button size="small">Edit</Button>
+                        </CardActions>
+                        <CardActions>
+                            <IconButton onClick={() => this.handleVote(post.id, 'upVote')} className="mg-5" aria-label="Vote Up">
+                                <ArrowUpwardIcon color="primary" />
+                            </IconButton>
+                            <IconButton onClick={() => this.handleVote(post.id, 'downVote')} className="mg-5" aria-label="Vote Down">
+                                <ArrowDownwardIcon color="primary" />
+                            </IconButton>
                         </CardActions>
                     </Card>
                 ))}
