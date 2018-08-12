@@ -12,9 +12,17 @@ export function listComments(id, comments){
     }
 }
 
-export function deletePostComment(id){
+export function addComment(comment){
+    return{
+        type: ADD_COMMENT,
+        comment
+    }
+}
+
+export function deleteComment(id){
     return{
         type: DELETE_COMMENT,
+        id
     }
 }
 

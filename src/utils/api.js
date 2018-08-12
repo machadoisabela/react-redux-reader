@@ -64,6 +64,16 @@ export const getAllComments = (id) =>
       return data;
     })
 
+export const addNewComment = (data) =>
+  fetch(`${api}/comments`, {
+    method: 'POST',
+    headers,
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+    .then((data) => {
+      return data;
+    })
+
 export const deleteComments = (id) =>
   fetch(`${api}/comments/${id}`, {
     method: 'DELETE',
