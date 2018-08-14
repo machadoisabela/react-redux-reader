@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { connect } from 'react-redux';
 import * as API from '../utils/api';
 import { showPost } from "../actions/postActions";
-import { withRouter } from 'react-router-dom';
+import { withRouter, Link } from 'react-router-dom';
 import Card from '@material-ui/core/Card';
 import Button from '@material-ui/core/Button';
 import { addVote, deletePost } from "../actions/postActions";
@@ -56,7 +56,7 @@ class PostDetails extends Component {
                                 <ArrowDownwardIcon color="primary" />
                             </IconButton>
                             <Button className="mg-5" size="small" onClick={() => this.handleDeletePost(post.id)}>Delete</Button>
-                            <Button className="mg-5" size="small">Edit</Button>
+                            <Button className="mg-5" size="small" component={Link} to={`/edit/post/${post.category}/${post.id}`}>Edit</Button>
                         </div>
                         <div>
                             <div>{post.commentCount} Comment(s)</div>

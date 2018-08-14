@@ -40,7 +40,7 @@ class PostList extends Component {
         API.getDeletePost(id).then(() => this.props.dispatch(deletePost(id)));
     }
 
-    loadPosts = () => {
+    loadPosts() {
         let category = this.props.match ? this.props.match.params.category : undefined;
         if (category !== undefined) {
             API.getAllPostsForCategory(category).then(posts => this.props.dispatch(listPosts(posts)));
@@ -49,13 +49,16 @@ class PostList extends Component {
         }
     }
 
-    componentDidMount() {
+    componentDidMount() {       
         this.loadPosts()
     }
 
-    componentWillReceiveProps() {
-        this.loadPosts()
+    componentDidUpdate(nextProp){
+        if(nextProp.match.params.category !== this.props.match.params.category){
+            this.loadPosts()
+        }
     }
+
 
     render() {
 
@@ -112,9 +115,9 @@ class PostList extends Component {
                             </div>
                         </CardContent>
                         <CardActions className="pull-right">
-                            <Button size="small" component={Link} to={`/${post.category}/${post.id}`}>See More</Button>
+                            <Button size="small" component={Link} to={`/post/${post.category}/${post.id}`}>See More</Button>
                             <Button size="small" onClick={() => this.handleDeletePost(post.id)}>Delete</Button>
-                            <Button size="small">Edit</Button>
+                            <Button size="small" component={Link} to={`/edit/post/${post.category}/${post.id}`}>Edit</Button>
                         </CardActions>
                         <CardActions>
                             <IconButton onClick={() => this.handleVote(post.id, 'upVote')} className="mg-5" aria-label="Vote Up">

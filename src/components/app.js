@@ -26,7 +26,7 @@ class App extends Component {
           </Toolbar>
         </AppBar>
         <CatoriesList />
-        <Button style={{ float: 'right', margin: '10px' }} color="primary"><Link to="/post/add">ADD NEW POST</Link></Button>
+        <Button style={{ float: 'right', margin: '10px' }} color="primary" component={Link} to={`/post/add`}>ADD NEW POST</Button>
         <Route exact path="/:category" render={() => (
           <PostList />
         )} />
@@ -36,7 +36,10 @@ class App extends Component {
         <Route exact path="/post/add" render={() => (
           <AddPost/>
         )}/>
-        <Route exact path="/:category/:id" render={() => (
+         <Route exact path="/edit/post/:category/:id" render={() => (
+          <AddPost/>
+        )}/>        
+        <Route exact path="/post/:category/:id" render={() => (
           <PostDetails/>
         )}/>
       </div>

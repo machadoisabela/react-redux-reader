@@ -1,6 +1,6 @@
 import React, { Component } from "react";
 import { connect } from 'react-redux';
-import { listComments, addVoteOnComment, addComment, deleteComment } from "../actions/commentsActions";
+import { listComments, addVoteOnComment, addComment, deleteComment, showComment, editComment } from "../actions/commentsActions";
 import * as API from '../utils/api';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
@@ -8,6 +8,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import EditIcon from '@material-ui/icons/Edit';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import CloseIcon from '@material-ui/icons/Close';
 import { withRouter } from 'react-router-dom';
@@ -18,7 +19,8 @@ class CommentsList extends Component {
 
     state = {
         author: '',
-        body: ''
+        body: '',
+        isEdit: false
     };
 
     handleAddComment = (e) => {
@@ -59,6 +61,34 @@ class CommentsList extends Component {
         API.deleteComments(id).then(() => this.props.dispatch(deleteComment(id)));
     }
 
+    handleEditComment = (id) => {
+        API.getComment(id).then(comment => this.props.dispatch(showComment(comment)));
+    }
+
+    handleSaveComment = (e) => {
+        e.preventDefault()
+
+        const comment = {};
+        comment.timestamp = Date.now();
+        comment.body = this.state.body;
+
+        API.editComment(this.props.comments.comment.id, comment).then(comment => this.props.dispatch(editComment(this.props.comments.comment.id, comment)));
+
+        this.setState({
+            body: '',
+            isEdit: false
+        });
+    }
+
+    componentWillReceiveProps(nextProps) {
+        if(nextProps.comments.comment){
+            this.setState({
+                body: nextProps.comments.comment.body,
+                isEdit: true
+            })
+        }
+    }
+
     componentDidMount() {
         const { id } = this.props.match.params;
         if (id) {
@@ -69,7 +99,7 @@ class CommentsList extends Component {
     render() {
 
         const { comments } = this.props.comments;
-        const { author, body } = this.state;
+        const { author, body, isEdit } = this.state;
 
         return (
             <div>
@@ -85,6 +115,9 @@ class CommentsList extends Component {
                                 <IconButton onClick={() => this.handleVote(comment.id, 'downVote')} aria-label="Vote Down">
                                     <ArrowDownwardIcon color="primary" />
                                 </IconButton>
+                                <IconButton onClick={() => this.handleEditComment(comment.id)} aria-label="Edit">
+                                    <EditIcon color="primary" />
+                                </IconButton>
                                 <IconButton onClick={() => this.handleDeleteComment(comment.id)} aria-label="Delete">
                                     <CloseIcon color="primary" />
                                 </IconButton>
@@ -93,16 +126,23 @@ class CommentsList extends Component {
                     )}
                 </List>
                 <form className="new-comment">
-                    <div className="mt-5">Add New Comment</div>
-                    <TextField
-                        id="author"
-                        label="Author"
-                        name="author"
-                        margin="normal"
-                        value={author}
-                        onChange={(event) => this.handleChange(event)}
-                        fullWidth
-                    />
+                    {isEdit === false &&
+                        <div className="mt-5">Add New Comment</div>
+                    }
+                    {isEdit === true &&
+                        <div className="mt-5">Edit Comment</div>
+                    }
+                    {isEdit === false &&
+                        <TextField
+                            id="author"
+                            label="Author"
+                            name="author"
+                            margin="normal"
+                            value={author}
+                            onChange={(event) => this.handleChange(event)}
+                            fullWidth
+                        />
+                    }
                     <TextField
                         id="body"
                         label="Body"
@@ -112,7 +152,12 @@ class CommentsList extends Component {
                         onChange={(event) => this.handleChange(event)}
                         fullWidth
                     />
-                    <Button style={{ float: 'right' }} color="primary" onClick={(event) => this.handleAddComment(event)}>Add</Button>
+                    {isEdit === false &&
+                        <Button style={{ float: 'right' }} color="primary" onClick={(event) => this.handleAddComment(event)}>Add</Button>
+                    }
+                    {isEdit === true &&
+                        <Button style={{ float: 'right' }} color="primary" onClick={(event) => this.handleSaveComment(event)}>Edit</Button>
+                    }
                 </form>
             </div>
         )

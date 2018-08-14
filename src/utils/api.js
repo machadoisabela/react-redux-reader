@@ -45,6 +45,27 @@ export const addNewPost = (data) =>
       return data;
     })
 
+export const editPost = (id, data) =>
+  fetch(`${api}/posts/${id}`, {
+    method: 'PUT',
+    headers,
+    body: JSON.stringify(data)
+  }).then(res => res.json())
+    .then((data) => {
+      return data;
+    })
+
+  export const editComment = (id, data) =>
+    fetch(`${api}/comments/${id}`, {
+      method: 'PUT',
+      headers,
+      body: JSON.stringify(data)
+    }).then(res => res.json())
+      .then((data) => {
+        return data;
+      })
+    
+
 export const getDeletePost = (id) =>
   fetch(`${api}/posts/${id}`, {
     method: 'DELETE',
@@ -59,6 +80,13 @@ export const getAllCategories = () =>
     })
 export const getAllComments = (id) =>
   fetch(`${api}/posts/${id}/comments`, { headers })
+    .then(res => res.json())
+    .then((data) => {
+      return data;
+    })
+
+export const getComment = (id) =>
+  fetch(`${api}/comments/${id}`, { headers })
     .then(res => res.json())
     .then((data) => {
       return data;

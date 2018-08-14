@@ -102,6 +102,10 @@
   margin: 5px !important;
 }
 
+.text-center{
+  text-align: center;
+}
+
 .pull-right{
   float: right;
 }

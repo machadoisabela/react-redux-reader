@@ -1,4 +1,4 @@
-import { LIST_POSTS, LIST_POSTS_FOR_CATEGORY, DELETE_POST, ADD_VOTE, ADD_POST, SHOW_POST } from '../actions/postActions';
+import { LIST_POSTS, LIST_POSTS_FOR_CATEGORY, DELETE_POST, ADD_VOTE, ADD_POST, SHOW_POST, EDIT_POST } from '../actions/postActions';
 
 const postsInitialState = {
     posts: [],
@@ -22,6 +22,16 @@ function posts(state = postsInitialState, action){
             return{
                 ...state,
                 posts: state.posts.concat([action.post])
+            }
+        case EDIT_POST:
+            return{
+                ...state,
+                posts: state.posts.map(post => {
+                    if(post.id === action.id)
+                        post = action.post
+                    return post;
+                }),
+                post: null
             }
         case DELETE_POST:
             return{

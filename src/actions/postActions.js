@@ -4,6 +4,7 @@ export const ADD_POST = "ADD_POST"
 export const DELETE_POST = "DELETE_POST"
 export const ADD_VOTE = "ADD_VOTE"
 export const SHOW_POST = "SHOW_POST"
+export const EDIT_POST = "EDIT_POST"
 
 
 export function listPosts(posts){
@@ -25,6 +26,14 @@ export function listPostsForCategory(category, posts){
 export function addPost(post){
     return{
         type: ADD_POST,
+        post
+    }
+}
+
+export function editPost(id, post){
+    return{
+        type: EDIT_POST,
+        id, 
         post
     }
 }
