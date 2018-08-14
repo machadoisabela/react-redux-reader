@@ -14,7 +14,7 @@ import Select from '@material-ui/core/Select';
 import IconButton from '@material-ui/core/IconButton';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
-import { MenuItem } from "@material-ui/core";
+import MenuItem from "@material-ui/core/MenuItem";
 import { withRouter } from 'react-router-dom';
 
 class PostList extends Component {
