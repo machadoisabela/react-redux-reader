@@ -39,7 +39,7 @@ class App extends Component {
          <Route exact path="/edit/post/:category/:id" render={() => (
           <AddPost/>
         )}/>        
-        <Route exact path="/post/:category/:id" render={() => (
+        <Route exact path="/:category/:id" render={() => (
           <PostDetails/>
         )}/>
       </div>

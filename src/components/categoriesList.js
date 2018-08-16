@@ -10,12 +10,12 @@ import CardContent from '@material-ui/core/CardContent';
 class CatoriesList extends Component {
 
     handleSelectCategory = (category) => {
-        this.props.dispatch(selectCategory(category))
+        this.props.selectCategory(category)
     }
 
 
     componentDidMount(){        
-        API.getAllCategories().then((response) => this.props.dispatch(listCategories(response)))
+        API.getAllCategories().then((response) => this.props.listCategories(response))
     }
 
     render() {
@@ -26,7 +26,7 @@ class CatoriesList extends Component {
         return (
             <div className="categories-list">               
                 {categories && categories.length && categories.map((category) => (
-                    <Link to={`/${category.name}`} onClick={() => this.handleSelectCategory(category.name)}>
+                    <Link key={category.name} to={`/${category.name}`} onClick={() => this.handleSelectCategory(category.name)}>
                         <Card className="categories-card" key={category.name}>
                             <CardContent>                           
                                 <Typography className="categories-name">
@@ -41,9 +41,19 @@ class CatoriesList extends Component {
     }
 }
 
+function mapDispatchToProps(dispatch) {
+    return {
+        selectCategory: (category) => {
+            dispatch(selectCategory(category))
+        },
+        listCategories: (categories) => {
+            dispatch(listCategories(categories))
+        }
+    }
+}
 
 function mapStateToProps(categories){
     return categories
 }
 
-export default connect(mapStateToProps, null)(CatoriesList)
+export default connect(mapStateToProps, mapDispatchToProps)(CatoriesList)

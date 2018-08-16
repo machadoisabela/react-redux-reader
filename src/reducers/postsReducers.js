@@ -5,54 +5,57 @@ const postsInitialState = {
     post: null
 }
 
-function posts(state = postsInitialState, action){
-    switch(action.type){
+function posts(state = postsInitialState, action) {
+    switch (action.type) {
         case LIST_POSTS:
-            return{
+            return {
                 ...state,
                 posts: action.posts
             }
         case LIST_POSTS_FOR_CATEGORY:
-            return{
+            return {
                 ...state,
                 category: action.category,
                 posts: action.posts
             }
         case ADD_POST:
-            return{
+            return {
                 ...state,
                 posts: state.posts.concat([action.post])
             }
         case EDIT_POST:
-            return{
+            return {
                 ...state,
                 posts: state.posts.map(post => {
-                    if(post.id === action.id)
+                    if (post.id === action.id)
                         post = action.post
                     return post;
                 }),
                 post: null
             }
         case DELETE_POST:
-            return{
+            return {
                 ...state,
                 posts: state.posts.filter(post => post.id !== action.id)
             }
-        case SHOW_POST: 
-            return{
+        case SHOW_POST:
+            return {
                 ...state,
                 post: action.post
             }
-        case ADD_VOTE: 
-            return{
+        case ADD_VOTE:
+            return {
                 ...state,
                 post: state.post ? {
                     ...state.post,
                     voteScore: state.post.voteScore + action.vote
                 } : null,
                 posts: state.posts.map(post => {
-                    if(post.id === action.id)
-                        post.voteScore = post.voteScore + action.vote
+                    if (post.id === action.id)
+                        return {
+                            ...post,
+                            voteScore: post.voteScore + action.vote
+                        }
                     return post;
                 }),
             }

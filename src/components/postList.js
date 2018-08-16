@@ -65,7 +65,7 @@ class PostList extends Component {
         const { posts } = this.props.posts;
         const { orderBy } = this.state;
 
-        const orderedItens = posts.sort((a, b) => b[orderBy] - a[orderBy])
+        const orderedItens = [...posts].sort((a, b) => b[orderBy] - a[orderBy])
 
         return (
             <div>
@@ -115,7 +115,7 @@ class PostList extends Component {
                             </div>
                         </CardContent>
                         <CardActions className="pull-right">
-                            <Button size="small" component={Link} to={`/post/${post.category}/${post.id}`}>See More</Button>
+                            <Button size="small" component={Link} to={`/${post.category}/${post.id}`}>See More</Button>
                             <Button size="small" onClick={() => this.handleDeletePost(post.id)}>Delete</Button>
                             <Button size="small" component={Link} to={`/edit/post/${post.category}/${post.id}`}>Edit</Button>
                         </CardActions>

@@ -41,7 +41,10 @@ function comments(state = commentsInitialState, action){
                 ...state,
                 comments: state.comments.map(comment => {
                     if(comment.id === action.id)
-                        comment.voteScore = comment.voteScore + action.vote
+                        return{
+                            ...comment,
+                            voteScore: comment.voteScore + action.vote
+                        }
                     return comment;
                 }),
             }

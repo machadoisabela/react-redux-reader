@@ -14,6 +14,10 @@ import IconButton from '@material-ui/core/IconButton';
 
 class PostDetails extends Component {
 
+    state = {
+        notFound: false
+    }
+
     handleVote = (id, option) => {
         let data = {
             option: option
@@ -39,10 +43,13 @@ class PostDetails extends Component {
     render() {
 
         const { post } = this.props;
-
+        
         return (
             <div className="">
-                {post && (
+                {post && !post.title && (
+                    <h1 className="text-center">404</h1>
+                )}               
+                {post && post.title && (
                     <Card className="post-detail">
                         <h1>{post.title}</h1>
                         <div className="author">Writed by {post.author}</div>
